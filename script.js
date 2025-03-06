@@ -109,3 +109,28 @@ function displayCategories() {
 }
 
 displayCategories();
+
+// newsletter statr here 
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".newsletter-form");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from refreshing the page
+
+        const emailInput = form.querySelector("input");
+        const email = emailInput.value.trim();
+
+        if (validateEmail(email)) {
+            alert("Thank you for subscribing! 🎉");
+            emailInput.value = ""; // Clear input field
+        } else {
+            alert("Please enter a valid email address.");
+        }
+    });
+
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+});
