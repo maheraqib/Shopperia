@@ -1,0 +1,411 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #6a11cb, #2575fc;
+}
+.sticky-header {
+    position: sticky;
+    top: 0;
+    /* width: 100%; */
+    background: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out;
+  
+}
+.logo img {
+    width: 30%;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeIn 1s forwards;
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+.nav-menu li {
+    display: inline;
+}
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 15px 15px;
+    transition: transform 0.2s ease-in-out;
+
+}
+.nav-menu a:hover {
+    background: #555;
+    border-radius: 5px;
+
+}
+
+section {
+    height: 100vh;
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sticky-header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 50%;  /* Adjusted logo size for mobile */
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 12px;
+        width: 100%;
+        font-size: 1.2em; /* Slightly larger text for mobile */
+    }
+
+    .nav-menu a:hover {
+        background: #444;
+    }
+}
+
+
+/* banner section statrt here */
+
+
+@font-face {
+    font-family: "Mona Sans";
+    src: url("https://assets.codepen.io/64/Mona-Sans.woff2") format("woff2");
+}
+
+:root {
+    --bg-position: 100;
+    --after-blur: 0;
+    --after-opacity: 1;
+    --before-opacity: 0.3;
+    --btn-offset: 1;
+    --btn-scale: 1;
+
+    --color-white: hsl(0, 0%, 100%);
+    --color-cyan: hsl(180, 100%, 50%);
+    --color-blue: hsl(240, 100%, 50%);
+    --color-purple: hsl(270, 100%, 50%);
+    --color-pink: hsl(330, 40%, 70%);
+    --color-red: hsl(0, 100%, 50%);
+    --color-yellow: hsl(60, 100%, 50%);
+    --color-lime: hsl(90, 100%, 75%);
+}
+
+/* Banner Section */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('https://source.unsplash.com/random/1600x900') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+}
+
+.content h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Lil Rainbow Gradient Button */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(12, 8, 8, 0.1);
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        var(--color-white),
+        var(--color-cyan),
+        var(--color-blue),
+        var(--color-purple),
+        var(--color-pink),
+        var(--color-red),
+        var(--color-yellow),
+        var(--color-lime),
+        var(--color-white)
+    );
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease-in-out;
+    z-index: -1;
+    opacity: 0;
+}
+
+.btn:hover::before {
+    opacity: 1;
+    width: 250%;
+    height: 250%;
+    filter: blur(10px);
+}
+
+.btn:hover {
+    color: black;
+    background: white;
+}
+
+@media screen and (max-width: 768px) {
+
+    .banner {
+        height: 80vh; /* Reduced height for better mobile experience */
+        padding: 20px;
+    }
+
+    .content h1 {
+        font-size: 2rem; /* Smaller font for mobile */
+        margin-bottom: 8px;
+    }
+
+    .content p {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        font-size: 18px;
+        padding: 10px 20px;
+        width: 90%; /* Makes button full-width */
+        text-align: center;
+    }
+}
+
+
+/* Featured Products section start here */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    justify-content: center;
+}
+
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto; /* Set a fixed height */
+    object-fit: contain; /* Ensures the image covers the area without stretching */
+    border-radius: 8px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+/* .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+} */
+
+.product-name {
+    font-size: 18px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #28a745;
+    margin-bottom: 10px;
+}
+
+.add-to-cart {
+    background: #ff4f4f;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.add-to-cart:hover {
+    background: #e33e3e;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .product-card img {
+        height: 150px;
+    }
+}
+
+
+/* Categories Section start here  */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Grid layout for categories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Category card styling */
+.category-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 360px; /* Set a fixed height to align all boxes */
+}
+
+/* Ensures all images are the same size */
+.category-card img {
+    width: 300px;
+    height: 300px; /* Fixed height */
+    object-fit: contain; 
+    margin-bottom: 10px;
+
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Category name alignment */
+.category-name {
+    font-size: 16px;
+    font-weight: bold;
+    height: 40px; /* Ensures equal height for all names */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 24px;
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .category-card {
+        height: 140px; /* Adjust height for smaller screens */
+    }
+
+    .category-card img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .category-name {
+        font-size: 14px;
+        height: 30px;
+    }
+}
