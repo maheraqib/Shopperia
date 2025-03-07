@@ -41,8 +41,8 @@ function changeBackground() {
 }
 
 // Set the initial background and start the interval
-changeBackground();
-setInterval(changeBackground, 5000); // Change image every 5 seconds
+changeBackground(1);
+setInterval(changeBackground, 4000); // Change image every 5 seconds
 
 // Make it responsive for mobile
 window.addEventListener("resize", () => {
@@ -85,10 +85,10 @@ displayProducts();
 // Categories Section start here 
 
 const categories = [
-    { name: "Business suits", image: "images/products images/Categories Section/p1.jpg" },
-    { name: "Jeans", image: "images/products images/Categories Section/p2.png" },
-    { name: "Hoodies", image: "images/products images/Categories Section/p3.png" },
-    { name: "Sneakers", image: "images/products images/Categories Section/p4.png" },
+    { name: "Business suits", image: "images/products images/Categories Section/suits/p1.png" },
+    { name: "Jeans", image: "images/products images/Categories Section/jeans/p1.png" },
+    { name: "Hoodies", image: "images/products images/Categories Section/hoodies/p3.png" },
+    { name: "Sneakers", image: "images/products images/Categories Section/sneakers/p1.png" },
     { name: "Joggers", image: "images/products images/Categories Section/p5.png" },
     { name: "Caps", image: "images/products images/Categories Section/P6.jpg" }
 ];
@@ -134,3 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return emailPattern.test(email);
     }
 });
+
+// Sample Prod
+
+// Function to Display Products
+
