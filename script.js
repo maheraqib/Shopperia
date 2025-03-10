@@ -101,10 +101,12 @@ function addToCart(productId) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
-    // updateCart();
 
-    // ✅ Call Notification Function Here
+    // ✅ Show Notification
     showNotification();
+
+    // ✅ Show Cart Preview
+    showCartPreview();
 }
 
 // Function to Show Notification
@@ -116,18 +118,158 @@ function showNotification() {
         return;
     }
 
-    // Show notification
     notification.style.display = "block";
     notification.style.opacity = "1";
 
-    // Hide notification after 2 seconds
     setTimeout(() => {
         notification.style.opacity = "0";
         setTimeout(() => {
             notification.style.display = "none";
-        }, 500); // Wait for fade out
+        }, 500); // Fade out
     }, 1000);
 }
+
+// Function to Show the Cart Preview
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+
+    // ✅ Show Notification
+    showNotification();
+
+    // ✅ Show Cart Preview
+    showCartPreview();
+}
+
+// Function to Show Notification
+function showNotification() {
+    const notification = document.getElementById("cart-notification");
+
+    if (!notification) {
+        console.error("Notification element not found!");
+        return;
+    }
+
+    notification.style.display = "block";
+    notification.style.opacity = "1";
+
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 500); // Fade out
+    }, 1000);
+}
+
+// Function to Show the Cart Preview
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+
+    // ✅ Show Notification
+    showNotification();
+
+    // ✅ Show Cart Preview with Total Price
+    showCartPreview();
+}
+
+// Function to Show Notification
+function showNotification() {
+    const notification = document.getElementById("cart-notification");
+
+    if (!notification) {
+        console.error("Notification element not found!");
+        return;
+    }
+
+    notification.style.display = "block";
+    notification.style.opacity = "1";
+
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 500); // Fade out
+    }, 1000);
+}
+
+// Function to Show the Cart Preview
+function showCartPreview() {
+    const cartPopup = document.getElementById("cartPopup");
+    const cartItemsPreview = document.getElementById("cartItemsPreview");
+
+    if (!cartPopup || !cartItemsPreview) {
+        console.error("Cart preview elements not found!");
+        return;
+    }
+
+    cartItemsPreview.innerHTML = `
+        <button class="close-cart" onclick="closeCartPreview()">✖</button>
+    `;
+
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        totalPrice += item.price * item.quantity;
+
+        cartItemsPreview.innerHTML += `
+            <div class="cart-popup-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div>
+                    <p>${item.name}</p>
+                    <p>$${item.price} x ${item.quantity}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    cartItemsPreview.innerHTML += `
+        <div class="cart-total">
+            <strong>Total: $${totalPrice.toFixed(2)}</strong>
+        </div>
+    `;
+
+    cartPopup.style.display = "block";
+
+    // Auto-hide after 3 seconds (unless hovered)
+    setTimeout(() => {
+        if (!cartPopup.matches(":hover")) {
+            cartPopup.style.display = "none";
+        }
+    }, 3000);
+}
+
+// Function to Close the Cart Preview
+function closeCartPreview() {
+    document.getElementById("cartPopup").style.display = "none";
+}
+
+// Close Cart Preview when clicking outside
+document.addEventListener("click", function (event) {
+    const cartPopup = document.getElementById("cartPopup");
+    if (cartPopup && !cartPopup.contains(event.target) && !event.target.classList.contains("add-to-cart")) {
+        cartPopup.style.display = "none";
+    }
+});
+
 
 // Function to Update Cart Count in Header
 function updateCartCount() {
