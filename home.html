@@ -17,7 +17,7 @@
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
-                <li><a href="#testimonials">Categories</a></li>
+                <li><a href="#Category">Categories</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#contact">Contact   </a></li>
                 <li><a href="cart.html">Cart 🛒 <span id="cartCount">0</span></a></li>
@@ -31,16 +31,20 @@
         <div class="content">
             <h1>🔥 Exclusive Deal! 🔥</h1>
             <p>Get 50% OFF on all products for a limited time!</p>
-            <a href="#" class="btn">Shop Now</a>
+            <a href="#Category" class="btn">Shop Now</a>
         </div>
     </div>
+    
 
     <div class="container">
         <h2 id="featured-products">🔥 Featured Products 🔥</h2>
-        <div class="product-grid" id="productGrid">
-            <!-- Products will be injected here by JS -->
+        <div id="productGrid"></div>
+        <!-- Products will be injected here by JS -->
         </div>
     </div>
+<!-- cart-notification -->
+    <div id="cart-notification">Item added! Ready to checkout</div>
+
 
     <div class="container">
         <h2 id="Category">🛍️ Shop by Category</h2>
@@ -122,8 +126,6 @@
         <p class="footer-bottom">© 2025 Shopperia. All rights reserved.</p>
     </footer>
     
-
-
 </body>
 
 <script src="script.js"></script>

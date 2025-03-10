@@ -56,31 +56,88 @@ window.addEventListener("resize", () => {
 // Featured Products section
 
 const products = [
-    { name: "Sky Check Classic Fit Shirt", price: "$20", image: "images/products images/p1.jpg" },
-    { name: "Navy Printed Tailored Smart Fit Shirt", price: "$25", image: "images/products images/p2.jpg" },
-    { name: "Yellow Stripe Tailored Smart Fit Shirt", price: "$20", image: "images/products images/p3.jpg" },
-    { name: "Maroon Stripe Classic Fit Shirt", price: "$40", image: "images/products images/p4.jpg" },
-    { name: "Green Check Classic Fit Shirt", price: "$30", image: "images/products images/p5.jpg" },
-    { name: "White Printed Band Collar T-shirt", price: "$15", image: "images/products images/p6.jpg" },
+    { id: 1, name: "Sky Check Classic Fit Shirt", price: 20, image: "images/products images/p1.jpg" },
+    { id: 2, name: "Navy Printed Tailored Smart Fit Shirt", price: 25, image: "images/products images/p2.jpg" },
+    { id: 3, name: "Yellow Stripe Tailored Smart Fit Shirt", price: 39.99, image: "images/products images/p3.jpg" },
+    { id: 4, name: "Maroon Stripe Classic Fit Shirt", price: 30.99, image: "images/products images/p4.jpg" },
+    { id: 5, name: "Green Check Classic Fit Shirt", price: 39.99, image: "images/products images/p5.jpg" },
+    { id: 6, name: "White Printed Band Collar T-shirt", price: 14.99, image: "images/products images/p6.jpg" },
 ];
 
-const productGrid = document.getElementById("productGrid");
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// Function to Display Products
 function displayProducts() {
-    productGrid.innerHTML = ""; // Clear previous content
+    const productGrid = document.getElementById("productGrid");
+    productGrid.innerHTML = "";
+
     products.forEach(product => {
-        productGrid.innerHTML += `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}">
-                <div class="product-name">${product.name}</div>
-                <div class="product-price">${product.price}</div>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
+        const productCard = document.createElement("div");
+        productCard.classList.add("product-card");
+
+        productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price.toFixed(2)}</p>
+            <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
         `;
+
+        productGrid.appendChild(productCard);
     });
+
+    updateCartCount();
 }
 
+// Function to Add Product to Cart
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    // updateCart();
+
+    // ✅ Call Notification Function Here
+    showNotification();
+}
+
+// Function to Show Notification
+function showNotification() {
+    const notification = document.getElementById("cart-notification");
+
+    if (!notification) {
+        console.error("Notification element not found!");
+        return;
+    }
+
+    // Show notification
+    notification.style.display = "block";
+    notification.style.opacity = "1";
+
+    // Hide notification after 2 seconds
+    setTimeout(() => {
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 500); // Wait for fade out
+    }, 1000);
+}
+
+// Function to Update Cart Count in Header
+function updateCartCount() {
+    document.getElementById("cartCount").textContent = cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+// Load Products on Page Load
 displayProducts();
+
+
 
 // Categories Section start here 
 
@@ -89,8 +146,8 @@ const categories = [
     { name: "Jeans", image: "images/products images/Categories Section/jeans/p1.png" },
     { name: "Hoodies", image: "images/products images/Categories Section/hoodies/p3.png" },
     { name: "Sneakers", image: "images/products images/Categories Section/sneakers/p1.png" },
-    { name: "Joggers", image: "images/products images/Categories Section/p5.png" },
-    { name: "Caps", image: "images/products images/Categories Section/P6.jpg" }
+    { name: "Joggers", image: "images/products images/Categories Section/joggers/p1.jpg" },
+    { name: "Caps", image: "images/products images/Categories Section/caps/P1.jpg" }
 ];
 
 const categoriesGrid = document.getElementById("categoriesGrid");
@@ -134,8 +191,4 @@ document.addEventListener("DOMContentLoaded", function () {
         return emailPattern.test(email);
     }
 });
-
-// Sample Prod
-
-// Function to Display Products
 

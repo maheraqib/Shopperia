@@ -27,20 +27,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Sample Product Data start
 const products = [
-    { id: 1, name: "Business suits", category: "Business suits", price: 199, popularity: 90, rating: 4.5, image: "images/products images/Categories Section/suits/p1.png", hoverImage: "images/products images/Categories Section/suits/p2.png" },
+    { id: 1, name: "Blue Smart Fit Suit For men", category: "Business suits", price: 199, popularity: 90, rating: 4.5, image: "images/products images/Categories Section/suits/p1.png", hoverImage: "images/products images/Categories Section/suits/p2.png" },
 
-    { id: 2, name: "Jeans", category: "Jeans", price: 29, popularity: 85, rating: 4.7, image: "images/products images/Categories Section/jeans/P2.jpg", hoverImage: "images/products images/Categories Section/jeans/P3.jpg" },
+    { id: 2, name: "Dark Blue Smart Fit Denim", category: "Jeans", price: 29, popularity: 85, rating: 4.7, image: "images/products images/Categories Section/jeans/P2.jpg", hoverImage: "images/products images/Categories Section/jeans/P3.jpg" },
 
-    { id: 3, name: "Hoodies", category: "Hoodies", price: 110, popularity: 95, rating: 4.3, image: "images/products images/Categories Section/hoodies/p1.webp", hoverImage: "images/products images/Categories Section/hoodies/p2.webp" },
+    { id: 3, name: "Pak Signature Stripe Sweatshirt", category: "Hoodies", price: 110, popularity: 95, rating: 4.3, image: "images/products images/Categories Section/hoodies/p1.webp", hoverImage: "images/products images/Categories Section/hoodies/p2.webp" },
 
-    { id: 4, name: "Sneakers", category: "Sneakers", price: 150, popularity: 80, rating: 4.6, image: "images/products images/Categories Section/sneakers/p1.png", hoverImage: "images/products images/Categories Section/sneakers/p2.png" },
-    { id: 5, name: "Joggers", category: "Joggers", price: 60, popularity: 88, rating: 4.2, image: "sneakers.jpg", hoverImage: "headphones-hover.jpg" },
-    { id: 6, name: "Caps", category: "Caps", price: 120, popularity: 92, rating: 4.8, image: "watch.jpg", hoverImage: "sneakers-hover.jpg" },
-    { id: 7, name: "Hoodies", category: "Hoodies", price: 25, popularity: 99, rating: 4.7, image: "tshirt.jpg", hoverImage: "watch-hover.jpg" },
-    { id: 8, name: "Jeans", category: "Jeans", price: 10, popularity: 80, rating: 4.5, image: "laptop.jpg", hoverImage: "watch-hover.jpg" },
-    { id: 9, name: "Business suits", category: "Business suits", price: 10, popularity: 80, rating: 4.5, image: "laptop.jpg", hoverImage: "watch-hover.jpg" },
+    { id: 4, name: "Men's sports sneakers", category: "Sneakers", price: 150, popularity: 80, rating: 4.6, image: "images/products images/Categories Section/sneakers/p1.png", hoverImage: "images/products images/Categories Section/sneakers/p2.png" },
+    
+    { id: 5, name: "Black Orbit 7.0", category: "Joggers", price: 60, popularity: 88, rating: 4.2, image: "images/products images/Categories Section/joggers/p1.jpg", hoverImage: "images/products images/Categories Section/joggers/p2.jpg" },
 
+    { id: 6, name: "Top Level Baseball Cap", category: "Caps", price: 120, popularity: 92, rating: 4.8, image: "images/products images/Categories Section/caps/P1.jpg", hoverImage: "images/products images/Categories Section/caps/p2.png" },
+
+    { id: 7, name: "Life Is A Trip Printed Hoodie", category: "Hoodies", price: 25, popularity: 99, rating: 4.7, image: "images/products images/Categories Section/hoodies/p4.png", hoverImage: "images/products images/Categories Section/hoodies/p5.png" },
+
+    { id: 8, name: "Stone Smart Fit Denim", category: "Jeans", price: 10, popularity: 80, rating: 4.5, image: "images/products images/Categories Section/jeans/p4.jpg", hoverImage: "images/products images/Categories Section/jeans/p5.jpg" },
+    
+    { id: 9, name: "Khaki Texture Classic Fit Suit", category: "Business suits", price: 199, popularity: 80, rating: 4.5, image: "images/products images/Categories Section/suits/p3.png", hoverImage: "images/products images/Categories Section/suits/p4.png" },
 ];
+
+// Get cart from local storage or initialize empty cart
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // Function to Display Products and Update Count
 function displayProducts(filteredProducts) {
@@ -53,24 +60,59 @@ function displayProducts(filteredProducts) {
     productCount.textContent = `Total Products: ${filteredProducts.length}`;
 
     filteredProducts.forEach(product => {
-        productGrid.innerHTML += `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" 
-                     class="product-img"
-                     onmouseover="this.src='${product.hoverImage}'" 
-                     onmouseout="this.src='${product.image}'">
-                <h3>${product.name}</h3>
-                <p class="price">$${product.price}</p>
-                <p class="rating">⭐ ${product.rating}</p>
-                <p class="category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
+        const productCard = document.createElement("div");
+        productCard.classList.add("product-card");
+
+        productCard.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" 
+                 class="product-img"
+                 onmouseover="this.src='${product.hoverImage}'" 
+                 onmouseout="this.src='${product.image}'">
+            <h3>${product.name}</h3>
+            <p class="price">$${product.price}</p>
+            <p class="rating">⭐ ${product.rating}</p>
+            <p class="category">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
+            <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
         `;
+
+        productGrid.appendChild(productCard);
     });
+
+    updateCartCount();
 }
 
-// Initial Display of Products
-displayProducts(products);
+// Function to Add Product to Cart
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    showNotification();
+}
+
+// Show Notification when Item is Added
+function showNotification() {
+    const notification = document.getElementById("cart-notification");
+    
+    notification.classList.add("show");
+
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 1000); // Hide after 2 seconds
+}
+
+
+// Update Cart Count in Header
+function updateCartCount() {
+    document.getElementById("cartCount").textContent = cart.reduce((total, item) => total + item.quantity, 0);
+}
 
 // Filtering & Sorting Functionality
 document.getElementById("categoryFilter").addEventListener("change", function() {
@@ -95,5 +137,8 @@ document.getElementById("sortOptions").addEventListener("change", function() {
 
     displayProducts(sortedProducts);
 });
+
+// Load Products on Page Load
+displayProducts(products);
 
 // Sample Product Data ended here
