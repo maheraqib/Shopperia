@@ -318,8 +318,8 @@ select {
 
 /* Product Image */
 .product-card img {
-    width: 90%;
-    height: 480px; /* Keeps images the same size */
+    width: 100%;
+    height: 450px; /* Keeps images the same size */
     object-fit: cover; /* Ensures images fit without stretching */
     border-radius: 8px;
     transition: opacity 0.3s ease-in-out;
