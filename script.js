@@ -5,7 +5,7 @@ window.addEventListener("scroll", function () {
     if (window.scrollY > 50) {
         header.style.background = "#222";
         header.style.padding = "10px 15px"; // Reduce padding for a compact look
-        // header.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)"; // Add shadow
+        header.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)"; // Add shadow
     } else {
         header.style.background = "#333";
         header.style.padding = "15px 20px"; // Reset padding
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// we can update background images here
 const images = [
     "images/banner1.avif", 
     "images/banner2.avif", 
@@ -42,7 +43,7 @@ function changeBackground() {
 
 // Set the initial background and start the interval
 changeBackground(1);
-setInterval(changeBackground, 4000); // Change image every 5 seconds
+setInterval(changeBackground, 4000); // Change image every 4 seconds
 
 // Make it responsive for mobile
 window.addEventListener("resize", () => {
@@ -53,7 +54,7 @@ window.addEventListener("resize", () => {
     }
 });
 
-// Featured Products section
+// Featured Products section we can add more products here
 
 const products = [
     { id: 1, name: "Sky Check Classic Fit Shirt", price: 20, image: "images/products images/p1.jpg" },
@@ -102,92 +103,8 @@ function addToCart(productId) {
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
 
-    // ✅ Show Notification
     showNotification();
 
-    // ✅ Show Cart Preview
-    showCartPreview();
-}
-
-// Function to Show Notification
-function showNotification() {
-    const notification = document.getElementById("cart-notification");
-
-    if (!notification) {
-        console.error("Notification element not found!");
-        return;
-    }
-
-    notification.style.display = "block";
-    notification.style.opacity = "1";
-
-    setTimeout(() => {
-        notification.style.opacity = "0";
-        setTimeout(() => {
-            notification.style.display = "none";
-        }, 500); // Fade out
-    }, 1000);
-}
-
-// Function to Show the Cart Preview
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-
-    // ✅ Show Notification
-    showNotification();
-
-    // ✅ Show Cart Preview
-    showCartPreview();
-}
-
-// Function to Show Notification
-function showNotification() {
-    const notification = document.getElementById("cart-notification");
-
-    if (!notification) {
-        console.error("Notification element not found!");
-        return;
-    }
-
-    notification.style.display = "block";
-    notification.style.opacity = "1";
-
-    setTimeout(() => {
-        notification.style.opacity = "0";
-        setTimeout(() => {
-            notification.style.display = "none";
-        }, 500); // Fade out
-    }, 1000);
-}
-
-// Function to Show the Cart Preview
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({ ...product, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-
-    // ✅ Show Notification
-    showNotification();
-
-    // ✅ Show Cart Preview with Total Price
     showCartPreview();
 }
 
@@ -270,6 +187,8 @@ document.addEventListener("click", function (event) {
     }
 });
 
+// ended notification and cart preview 
+
 
 // Function to Update Cart Count in Header
 function updateCartCount() {
@@ -281,7 +200,7 @@ displayProducts();
 
 
 
-// Categories Section start here 
+// Categories Section start here we can add more Categories here
 
 const categories = [
     { name: "Business suits", image: "images/products images/Categories Section/suits/p1.png" },

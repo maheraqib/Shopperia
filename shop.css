@@ -376,22 +376,101 @@ select {
     }
 }
 
-.cart-notification {
+#cart-notification {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: #4CAF50;
+    background: #4CAF50;
     color: white;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 16px;
-    display: none;
-    z-index: 1000;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    display: none;  /* Hidden by default */
+    opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    z-index: 1000; /* Ensures it appears on top */
 }
 
-.cart-notification.show {
+/* Show Notification */
+.show {
     display: block;
     opacity: 1;
+}
+
+
+/* Cart Pop-up Styling */
+.cart-popup {
+    position: fixed;
+    right: 20px;
+    top: 70px;
+    width: 250px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    display: none;
+    z-index: 1000;
+}
+
+.cart-popup h4 {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-popup-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.cart-popup-item img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.cart-popup-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.cart-popup-footer button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
+
+.cart-popup-footer button:hover {
+    background-color: #218838;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #555;
+}
+
+.close-cart:hover {
+    color: red;
+}
+
+.cart-total {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: right;
+    border-top: 1px solid #ddd;
 }

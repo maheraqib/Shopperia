@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".banner").style.opacity = "1";
 });
 
-// Sample Product Data start
+// Product Data start here and we can add more products here
 const products = [
     { id: 1, name: "Blue Smart Fit Suit For men", category: "Business suits", price: 199, popularity: 90, rating: 4.5, image: "images/products images/Categories Section/suits/p1.png", hoverImage: "images/products images/Categories Section/suits/p2.png" },
 
@@ -94,19 +94,90 @@ function addToCart(productId) {
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
+
     showNotification();
+
+    showCartPreview();
 }
 
-// Show Notification when Item is Added
+// Function to Show Notification
 function showNotification() {
     const notification = document.getElementById("cart-notification");
-    
-    notification.classList.add("show");
+
+    if (!notification) {
+        console.error("Notification element not found!");
+        return;
+    }
+
+    notification.style.display = "block";
+    notification.style.opacity = "1";
 
     setTimeout(() => {
-        notification.classList.remove("show");
-    }, 1000); // Hide after 2 seconds
+        notification.style.opacity = "0";
+        setTimeout(() => {
+            notification.style.display = "none";
+        }, 500); // Fade out
+    }, 1000);
 }
+
+// Function to Show the Cart Preview
+function showCartPreview() {
+    const cartPopup = document.getElementById("cartPopup");
+    const cartItemsPreview = document.getElementById("cartItemsPreview");
+
+    if (!cartPopup || !cartItemsPreview) {
+        console.error("Cart preview elements not found!");
+        return;
+    }
+
+    cartItemsPreview.innerHTML = `
+        <button class="close-cart" onclick="closeCartPreview()">✖</button>
+    `;
+
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+        totalPrice += item.price * item.quantity;
+
+        cartItemsPreview.innerHTML += `
+            <div class="cart-popup-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div>
+                    <p>${item.name}</p>
+                    <p>$${item.price} x ${item.quantity}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    cartItemsPreview.innerHTML += `
+        <div class="cart-total">
+            <strong>Total: $${totalPrice.toFixed(2)}</strong>
+        </div>
+    `;
+
+    cartPopup.style.display = "block";
+
+    // Auto-hide after 3 seconds (unless hovered)
+    setTimeout(() => {
+        if (!cartPopup.matches(":hover")) {
+            cartPopup.style.display = "none";
+        }
+    }, 3000);
+}
+
+// Function to Close the Cart Preview
+function closeCartPreview() {
+    document.getElementById("cartPopup").style.display = "none";
+}
+
+// Close Cart Preview when clicking outside
+document.addEventListener("click", function (event) {
+    const cartPopup = document.getElementById("cartPopup");
+    if (cartPopup && !cartPopup.contains(event.target) && !event.target.classList.contains("add-to-cart")) {
+        cartPopup.style.display = "none";
+    }
+});
 
 
 // Update Cart Count in Header
@@ -138,7 +209,6 @@ document.getElementById("sortOptions").addEventListener("change", function() {
     displayProducts(sortedProducts);
 });
 
-// Load Products on Page Load
 displayProducts(products);
 
-// Sample Product Data ended here
+// Product Data section ended here
