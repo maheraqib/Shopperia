@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif; 
 }
 .sticky-header {
-    position: sticky;
+    /* position: sticky; */
     top: 0;
         background: #333;
     color: white;
