@@ -185,16 +185,204 @@ function updateCartCount() {
     document.getElementById("cartCount").textContent = cart.reduce((total, item) => total + item.quantity, 0);
 }
 
-// Filtering & Sorting Functionality
-document.getElementById("categoryFilter").addEventListener("change", function() {
-    const selectedCategory = this.value;
-    let filteredProducts = selectedCategory === "all" ? products : products.filter(p => p.category === selectedCategory);
-    displayProducts(filteredProducts);
+// searchBar Functionality here 
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchBar");
+    const productsSection = document.querySelector(".product-section"); 
+    const noResultsMessage = document.createElement("div"); 
+
+    if (!searchInput || !productsSection) {
+        console.error("Search bar or product section not found in the DOM!");
+        return;
+    }
+
+    // ✅ Style for no results message
+    noResultsMessage.id = "noResultsMessage";
+    noResultsMessage.textContent = "No products found!";
+    noResultsMessage.style.display = "none";
+    noResultsMessage.style.textAlign = "center";
+    noResultsMessage.style.padding = "20px";
+    noResultsMessage.style.fontSize = "1.5rem";
+    noResultsMessage.style.fontWeight = "bold";
+    noResultsMessage.style.opacity = "0";
+    noResultsMessage.style.transition = "opacity 1s ease-in-out";
+    productsSection.appendChild(noResultsMessage); // Add message to products section
+
+    searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase().trim();
+
+        if (query === "") {
+            displayProducts(products);
+            hideNoResultsMessage();
+            return;
+        }
+
+        const filteredProducts = products.filter(p => 
+            p.name.toLowerCase().includes(query) || 
+            p.category.toLowerCase().includes(query)
+        );
+
+        if (filteredProducts.length === 0) {
+            displayNoResultsMessage();
+        } else {
+            hideNoResultsMessage();
+        }
+
+        displayProducts(filteredProducts);
+    });
+
+    searchInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            productsSection.scrollIntoView({ behavior: "smooth" });
+            this.blur();
+        }
+    });
+
+    // ✅ Function to show "No products found" message with animation
+    function displayNoResultsMessage() {
+        noResultsMessage.style.display = "block";
+        setTimeout(() => {
+            noResultsMessage.style.opacity = "1";
+        }, 100);
+    }
+
+    // ✅ Function to hide message
+    function hideNoResultsMessage() {
+        noResultsMessage.style.opacity = "0";
+        setTimeout(() => {
+            noResultsMessage.style.display = "none";
+        }, 1000);
+    }
 });
 
-document.getElementById("sortOptions").addEventListener("change", function() {
-    let sortedProducts = [...products];
+
+// Filtering & Sorting Functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const categoryFilters = document.querySelectorAll(".categoryFilter");
+    const ratingFilters = document.querySelectorAll(".ratingFilter");
+    const priceRange = document.getElementById("priceRange");
+    const priceValue = document.getElementById("priceValue");
+
+    function filterProducts() {
+        let selectedCategories = [...categoryFilters].filter(cb => cb.checked).map(cb => cb.value);
+        let selectedRatings = [...ratingFilters].filter(cb => cb.checked).map(cb => parseFloat(cb.value));
+        let maxPrice = parseFloat(priceRange.value);
+
+        let filteredProducts = products.filter(product => {
+            let matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+            let matchesRating = selectedRatings.length === 0 || selectedRatings.some(rating => product.rating >= rating);
+            let matchesPrice = product.price <= maxPrice;
+
+            return matchesCategory && matchesRating && matchesPrice;
+        });
+
+        displayProducts(filteredProducts);
+    }
+
+    // Category filter event
+    categoryFilters.forEach(cb => cb.addEventListener("change", filterProducts));
+
+    // Rating filter event
+    ratingFilters.forEach(cb => cb.addEventListener("change", filterProducts));
+
+    // Price range event
+    priceRange.addEventListener("input", () => {
+        priceValue.textContent = priceRange.value;
+        filterProducts();
+    });
+
+    // Initial Display
+    displayProducts(products);
+});
+
+
+displayProducts(products);
+
+// Product Data section ended here
+
+// Pagination section start here
+let currentPage = 1;
+const itemsPerPage = 6; // Show 6 products per page
+let filteredProducts = []; // Store filtered products
+
+// Function to Display Products with Pagination
+function displayProductsPaginated(productsToDisplay) {
+    const productGrid = document.getElementById("productGrid");
+    const totalPages = Math.ceil(productsToDisplay.length / itemsPerPage);
+    const productCount = document.getElementById("productCount"); // Get total item counter
+
+    // Ensure currentPage is within bounds
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    // Slice products for current page
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedProducts = productsToDisplay.slice(start, end);
+
+    // Update product grid
+    productGrid.innerHTML = "";
+    paginatedProducts.forEach(product => {
+        productGrid.innerHTML += `
+            <div class="product-card">
+                <img src="${product.image}" alt="${product.name}" class="product-img"
+                    onmouseover="this.src='${product.hoverImage}'" 
+                    onmouseout="this.src='${product.image}'">
+                <h3>${product.name}</h3>
+                <p class="price">$${product.price}</p>
+                <p class="rating">⭐ ${product.rating}</p>
+                <p class="category">${product.category}</p>
+                <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+            </div>
+        `;
+    });
+
+    // ✅ Show the number of currently displayed items
+    productCount.textContent = `Showing ${paginatedProducts.length} of ${productsToDisplay.length} products`;
+
+    // Update pagination controls
+    document.getElementById("pageNumber").textContent = currentPage;
+    document.getElementById("prevPage").disabled = (currentPage === 1);
+    document.getElementById("nextPage").disabled = (productsToDisplay.length <= itemsPerPage || currentPage === totalPages);
+
+    attachCartEventListeners(); // Ensure buttons work after pagination change
+}
+
+// Function to Handle Next Page
+document.getElementById("nextPage").addEventListener("click", function () {
+    currentPage++;
+    displayProductsPaginated(filteredProducts.length ? filteredProducts : products);
+});
+
+// Function to Handle Previous Page
+document.getElementById("prevPage").addEventListener("click", function () {
+    currentPage--;
+    displayProductsPaginated(filteredProducts.length ? filteredProducts : products);
+});
+
+// Ensure "Add to Cart" works after pagination
+function attachCartEventListeners() {
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const productId = parseInt(this.getAttribute("onclick").match(/\d+/)[0]);
+            addToCart(productId);
+        });
+    });
+}
+
+// ✅ Function to Handle Category Filter
+document.getElementById("categoryFilter").addEventListener("change", function () {
+    const selectedCategory = this.value;
+    filteredProducts = selectedCategory === "all" ? products : products.filter(p => p.category === selectedCategory);
+    currentPage = 1; // Reset to first page after filtering
+    displayProductsPaginated(filteredProducts);
+});
+
+// ✅ Function to Handle Sorting
+document.getElementById("sortOptions").addEventListener("change", function () {
     const sortBy = this.value;
+    let sortedProducts = filteredProducts.length ? [...filteredProducts] : [...products];
 
     if (sortBy === "price-low") {
         sortedProducts.sort((a, b) => a.price - b.price);
@@ -206,9 +394,9 @@ document.getElementById("sortOptions").addEventListener("change", function() {
         sortedProducts.sort((a, b) => b.rating - a.rating);
     }
 
-    displayProducts(sortedProducts);
+    currentPage = 1; // Reset to first page after sorting
+    displayProductsPaginated(sortedProducts);
 });
 
-displayProducts(products);
-
-// Product Data section ended here
+// ✅ Ensure Correct Initial Load
+displayProductsPaginated(products);

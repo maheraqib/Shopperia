@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
     <link rel="stylesheet" href="shop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link rel="icon" type="image/png" href="images/logo.jpg">
 </head>
 <body>
@@ -34,28 +36,41 @@
 
     <section class="product-section">
         <h2 id="Categories">🛍️ Our Products</h2>
+        <div class="search-container">
+            <input type="text" id="searchBar" class="search-input" placeholder="🔍 Search products...">
+        </div>
         <!-- Sorting & Filtering Options -->
         <p id="productCount">Total Products: 0</p>
+        
 
         <div class="filter-container">
-            <select id="categoryFilter">
-                <option value="all">All Categories</option>
-                <option value="Business suits">Business suits</option>
-                <option value="Jeans">Jeans</option>
-                <option value="Hoodies">Hoodies</option>
-                <option value="Sneakers">Sneakers</option>
-                <option value="Joggers">Joggers</option>
-                <option value="Caps">Caps</option>
-            </select>
-
-            <select id="sortOptions">
-                <option value="default">Sort By</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="popularity">Popularity</option>
-                <option value="rating">Rating</option>
-            </select>
+            <!-- Category Filters -->
+            <div class="filter-section">
+                <h4>Categories</h4>
+                <label><input type="checkbox" class="categoryFilter" value="Business suits"> Business suits</label>
+                <label><input type="checkbox" class="categoryFilter" value="Jeans"> Jeans</label>
+                <label><input type="checkbox" class="categoryFilter" value="Hoodies"> Hoodies</label>
+                <label><input type="checkbox" class="categoryFilter" value="Sneakers"> Sneakers</label>
+                <label><input type="checkbox" class="categoryFilter" value="Joggers"> Joggers</label>
+                <label><input type="checkbox" class="categoryFilter" value="Caps"> Caps</label>
+            </div>
+        
+            <!-- Price Range Filter -->
+            <div class="filter-section">
+                <h4>Price Range</h4>
+                <input type="range" id="priceRange" min="10" max="200" step="10" value="200">
+                <p>Max Price: $<span id="priceValue">200</span></p>
+            </div>
+        
+            <!-- Rating Filter -->
+            <div class="filter-section">
+                <h4>Rating</h4>
+                <label><input type="checkbox" class="ratingFilter" value="4.5"> 4.5⭐ & above</label>
+                <label><input type="checkbox" class="ratingFilter" value="4.0"> 4.0⭐ & above</label>
+                <label><input type="checkbox" class="ratingFilter" value="3.5"> 3.5⭐ & above</label>
+            </div>
         </div>
+        
         <!-- cart-notification -->
         <div id="cart-notification" class="cart-notification">
             Item added! Ready to Checkout
@@ -69,8 +84,6 @@
                 <button onclick="window.location.href='checkout.html'">Checkout</button>
             </div>
         </div>
-         
-        
 
         <!-- Product Grid -->
         <div class="product-grid" id="productGrid">
@@ -78,7 +91,14 @@
         </div>
     </section>
 
+    <!-- Pagination section start here -->
+    <div class="pagination">
+        <button id="prevPage" disabled>Previous</button>
+        <span id="pageNumber">1</span>
+        <button id="nextPage">Next</button>
+    </div>
     
+
 </body>
 <script src="shop.js"></script>
 </html>
