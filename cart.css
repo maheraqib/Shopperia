@@ -99,7 +99,6 @@ section {
 #cartSection {
     max-width: 1100px;
     margin: 30px auto;
-    padding: 20px;
     border: 1px solid #ddd;
     background: #f9f9f9;
     text-align: center;
@@ -110,13 +109,13 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #ddd;
 }
 
 .cart-item img {
     /* width: 50%; */
-    height: 180px;
+    height: 150px;
     object-fit: contain;
     border-radius: 10px;
 }
@@ -125,7 +124,7 @@ section {
     background: none;
     color: white;
     border: 5px;
-    padding: 10px 10px;
+    padding: 15px 15px;
     cursor: pointer;
 }
 
@@ -137,14 +136,14 @@ section {
 
 #clearCart {
     background: #27ae60;
-    color: white;
-    padding: 15px 15px ;
+    padding: 10px;
     border: 5px;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
-    margin: 15px;
+    margin: 10px;
+    color: white;
 }
-
+    
 #clearCart:hover {
     background: #218c54;
 }
