@@ -27,8 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Product Data start here and we can add more products here
 const products = [
-    { id: 1, name: "Blue Smart Fit Suit For men", category: "Business suits", price: 199, popularity: 90, rating: 4.5, image: "images/products images/Categories Section/suits/p1.png", hoverImage: "images/products images/Categories Section/suits/p2.png" },
-
+    { 
+        id: 1, 
+        name: "Blue Smart Fit Suit For Men", 
+        category: "Business suits",  
+        price: 199, 
+        popularity: 90, 
+        rating: 4.5, 
+        image: "images/products images/Categories Section/suits/p1.png", 
+        hoverImage: "images/products images/Categories Section/suits/p2.png",
+    },
     { id: 2, name: "Dark Blue Smart Fit Denim", category: "Jeans", price: 29, popularity: 85, rating: 4.7, image: "images/products images/Categories Section/jeans/P2.jpg", hoverImage: "images/products images/Categories Section/jeans/P3.jpg" },
 
     { id: 3, name: "Pak Signature Stripe Sweatshirt", category: "Hoodies", price: 110, popularity: 95, rating: 4.3, image: "images/products images/Categories Section/hoodies/p1.webp", hoverImage: "images/products images/Categories Section/hoodies/p2.webp" },
@@ -45,6 +53,8 @@ const products = [
     
     { id: 9, name: "Khaki Texture Classic Fit Suit", category: "Business suits", price: 199, popularity: 80, rating: 4.5, image: "images/products images/Categories Section/suits/p3.png", hoverImage: "images/products images/Categories Section/suits/p4.png" },
 ];
+
+
 
 // Get cart from local storage or initialize empty cart
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -400,3 +410,4 @@ document.getElementById("sortOptions").addEventListener("change", function () {
 
 // ✅ Ensure Correct Initial Load
 displayProductsPaginated(products);
+

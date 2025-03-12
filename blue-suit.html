@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" type="image/png" href="images/logo.jpg">
+<link rel="stylesheet" href="blue.css">
+</head>
+<body>
+    <header class="sticky-header">
+        <div class="logo"><img src="images/logo.jpg" alt=""></div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="#Category">Categories</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact   </a></li>
+                <li><a href="cart.html">Cart 🛒 <span id="cartCount">0</span></a></li>
+                <li><a href="#login">Login/Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <div class="product-detail">
+        <div class="gallery">
+            <div class="image-container">
+                <img id="mainImage" src="images/products images/Categories Section/suits/p1.png" alt="Product Image">
+            </div>
+            <div class="thumbnails">
+                <img src="images/products images/Categories Section/suits/p1.png" onclick="changeImage('images/products images/Categories Section/suits/p1.png')">
+                <img src="images/products images/Categories Section/suits/p2.png" onclick="changeImage('images/products images/Categories Section/suits/p2.png')">
+                <img src="images/products images/Categories Section/suits/Blue/p3.jpg" onclick="changeImage('images/products images/Categories Section/suits/Blue/p3.jpg')">
+                <img src="images/products images/Categories Section/suits/Blue/p4.jpg" onclick="changeImage('images/products images/Categories Section/suits/Blue/p4.jpg')">
+                <img src="images/products images/Categories Section/suits/Blue/p5.jpg" onclick="changeImage('images/products images/Categories Section/suits/Blue/p5.jpg')">
+                <img src="images/products images/Categories Section/suits/Blue/p6.jpg" onclick="changeImage('images/products images/Categories Section/suits/Blue/p6.jpg')">
+            </div>
+        </div>
+        <div class="details">
+            <h1>Product Name</h1>
+            <p class="price">$99.99</p>
+            <p class="description">This is a high-quality product with excellent features.</p>
+            <p class="stock">In Stock</p>
+            <button onclick="addToCart()">Add to Cart</button>
+            <button onclick="addToWishlist()">❤️ Wishlist</button>
+        </div>
+    </div>
+    
+    <div class="reviews">
+        <h2>Customer Reviews</h2>
+        <div id="reviewList"></div>
+        <textarea id="reviewInput" placeholder="Write a review..."></textarea>
+        <button class="review-btn" onclick="addReview()">Submit Review</button>
+    </div>
+    
+    <div class="related-products">
+        <h2>Related Products</h2>
+        <div class="related-grid" id="relatedProducts"></div>
+    </div>
+
+    <script src="blue.js"></script>
+</body>
+</html>

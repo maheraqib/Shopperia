@@ -89,7 +89,4 @@ function showSuccessNotification(message) {
     }, 2000); // Hide after 2 seconds
 }
 
-
-
-// Load Cart on Page Load
 displayCart();
