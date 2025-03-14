@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #6a11cb, #2575fc;
+}
+.sticky-header {
+    position: sticky;
+    top: 0;
+    /* width: 100%; */
+    background: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    z-index: 1000;
+    transition: background 0.3s ease-in-out;
+  
+}
+.logo img {
+    width: 30%;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeIn 1s forwards;
+}
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+.nav-menu li {
+    display: inline;
+}
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 15px 15px;
+    transition: transform 0.2s ease-in-out;
+
+}
+.nav-menu a:hover {
+    background: #555;
+    border-radius: 5px;
+
+}
+
+section {
+    /* height: 100vh; */
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sticky-header {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 15px;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 50%;  /* Adjusted logo size for mobile */
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 12px;
+        width: 100%;
+        font-size: 1.2em; /* Slightly larger text for mobile */
+    }
+
+    .nav-menu a:hover {
+        background: #444;
+    }
+}
+
+/* Checkout Page Styling */
+.checkout-container {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+.billing-details, .payment-methods, .order-summary {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+textarea {
+    height: 80px;
+}
+
+.order-summary {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#orderItems {
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: darkgreen;
+}

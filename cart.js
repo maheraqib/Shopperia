@@ -90,3 +90,53 @@ function showSuccessNotification(message) {
 }
 
 displayCart();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalDisplay = document.getElementById("totalAmount");
+    const couponInput = document.getElementById("couponCode");
+    const applyCouponBtn = document.getElementById("applyCoupon");
+    const couponPopup = document.getElementById("couponPopup");
+    const closePopup = document.getElementById("closePopup");
+
+    const validCoupons = {
+        "DISCOUNT10": 10,
+        "SALE20": 20,
+        "OFFER30": 30
+    };
+
+    function calculateTotal() {
+        return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    }
+
+    function updateTotalDisplay(amount) {
+        totalDisplay.innerText = `$${amount.toFixed(2)}`;
+    }
+
+    let totalAmount = calculateTotal();
+    updateTotalDisplay(totalAmount);
+
+    applyCouponBtn.addEventListener("click", function () {
+        const coupon = couponInput.value.toUpperCase();
+        if (validCoupons[coupon]) {
+            let discount = (totalAmount * validCoupons[coupon]) / 100;
+            let newTotal = totalAmount - discount;
+            updateTotalDisplay(newTotal);
+            alert(`Coupon Applied! You saved ${validCoupons[coupon]}%`);
+            couponPopup.style.display = "none";
+        } else {
+            alert("Invalid Coupon Code! Try again.");
+        }
+    });
+
+    if (cartItems.length > 0) {
+        setTimeout(() => {
+            couponPopup.style.display = "flex";
+        }, 1000);
+    }
+
+    closePopup.addEventListener("click", function () {
+        couponPopup.style.display = "none";
+    });
+});

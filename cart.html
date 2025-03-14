@@ -31,7 +31,24 @@
         <h3>Total: $<span id="totalPrice">0.00</span></h3>
         <button id="clearCart">Clear Cart</button>
     </section>
-    
+
+   <!-- Coupon Popup -->
+   <div id="couponPopup" class="coupon-popup">
+    <div class="popup-content">
+        <span id="closePopup" class="close-btn">&times;</span>
+        <h2>Apply Coupon & Save Money!</h2>
+        <p>Enter a coupon code <strong>DISCOUNT10</strong> below to get a discount on your order.</p>
+        <input type="text" id="couponCode" placeholder="Enter Coupon Code">
+        <button id="applyCoupon">Apply Coupon</button>
+    </div>
+</div>
+
+<!-- Cart Summary -->
+<div class="cart-summary">
+    <h3>Cart Summary</h3>
+    <p>Subtotal: <span id="totalAmount">$0.00</span></p>
+    <a href="checkout.html"><button id="checkoutBtn">Proceed to Checkout</button></a>
+</div>
     
 
 </body>

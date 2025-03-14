@@ -58,6 +58,7 @@ body {
         align-items: center;
         padding: 10px 15px;
         text-align: center;
+    
     }
 
     .logo img {
@@ -544,3 +545,5 @@ select {
     font-size: 16px;
     font-weight: bold;
 }
+
+

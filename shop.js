@@ -59,6 +59,7 @@ const products = [
 // Get cart from local storage or initialize empty cart
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+
 // Function to Display Products and Update Count
 function displayProducts(filteredProducts) {
     const productGrid = document.getElementById("productGrid");
