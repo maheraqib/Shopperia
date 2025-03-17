@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     const orderItemsContainer = document.getElementById("orderItems");
     const totalAmountDisplay = document.getElementById("totalAmount");
-    const placeOrderBtn = document.getElementById("placeOrder");
     const cartCounter = document.getElementById("cartCounter"); // Cart counter element
-    const discountAmount = JSON.parse(localStorage.getItem("discount")) || 0; // Discount from coupon
+    const discountApplied = JSON.parse(localStorage.getItem("discountApplied")) || 0; // Discount percentage
+    let totalAmount = JSON.parse(localStorage.getItem("discountedTotal")) || 0; // Retrieve discounted total
 
-    // Function to update cart counter
+    //Function to update cart counter
     function updateCartCounter() {
         let totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
         if (cartCounter) {
@@ -22,28 +22,31 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        let totalAmount = 0;
         orderItemsContainer.innerHTML = "";
 
         cartItems.forEach(item => {
             let itemTotal = item.price * item.quantity;
-            totalAmount += itemTotal;
-
             let itemDiv = document.createElement("p");
             itemDiv.innerHTML = `${item.name} (x${item.quantity}) - $${itemTotal.toFixed(2)}`;
             orderItemsContainer.appendChild(itemDiv);
         });
 
-        if (discountAmount > 0) {
-            let discountValue = (totalAmount * discountAmount) / 100;
-            totalAmount -= discountValue; // Apply discount
-        }
-
-        totalAmountDisplay.innerText = `$${totalAmount.toFixed(2)}`;
+        totalAmountDisplay.innerText = `$${totalAmount.toFixed(2)}`; // Display the stored discounted total
     }
 
+    // Initialize checkout page
     updateCartCounter();
     updateOrderSummary();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const placeOrderBtn = document.getElementById("placeOrder"); // Ensure button exists
+
+    if (!placeOrderBtn) {
+        console.error("Error: 'placeOrder' button not found!");
+        return; // Stop execution if button is missing
+    }
 
     placeOrderBtn.addEventListener("click", function () {
         const fullName = document.getElementById("fullName").value.trim();

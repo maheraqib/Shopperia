@@ -112,18 +112,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateTotalDisplay(amount) {
         totalDisplay.innerText = `$${amount.toFixed(2)}`;
+        localStorage.setItem("discountedTotal", amount.toFixed(2)); // Store discounted total
     }
 
     let totalAmount = calculateTotal();
     updateTotalDisplay(totalAmount);
 
     applyCouponBtn.addEventListener("click", function () {
-        const coupon = couponInput.value.toUpperCase();
+        const coupon = couponInput.value.toUpperCase().trim();
         if (validCoupons[coupon]) {
             let discount = (totalAmount * validCoupons[coupon]) / 100;
             let newTotal = totalAmount - discount;
             updateTotalDisplay(newTotal);
             alert(`Coupon Applied! You saved ${validCoupons[coupon]}%`);
+            localStorage.setItem("discountApplied", validCoupons[coupon]); // Store discount percentage
             couponPopup.style.display = "none";
         } else {
             alert("Invalid Coupon Code! Try again.");
